@@ -1,2 +1,5 @@
 ﻿  Source.cpp
+C:\programy\c++\Projekty\Math_Tests\Math_Tests\Source.cpp(36,26): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\programy\c++\Projekty\Math_Tests\Math_Tests\Source.cpp(39,54): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\programy\c++\Projekty\Math_Tests\Math_Tests\Source.cpp(39,33): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   Math_Tests.vcxproj -> C:\programy\c++\Projekty\Math_Tests\x64\Debug\Math_Tests.exe
