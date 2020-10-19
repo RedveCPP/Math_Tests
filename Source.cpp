@@ -1,72 +1,13 @@
-#include <glm/vec2.hpp>
-#include <glm/glm.hpp>
-#include <glm/gtc/constants.hpp>
-#include <iostream>
-#include <SFML/Graphics.hpp>
-
-class Shape
-{
-protected:
-	glm::vec2 _position;
-public:
-
-	glm::vec2 GetPosition()
-	{
-		return _position;
-	}
-
-	virtual void Draw(sf::RenderWindow& window, sf::Color color = sf::Color::White) = 0;
-	virtual double GetArea() = 0;
-	virtual double GetDiameter() = 0;
-};
-
-class Circle :public Shape
-{
-private:
-	double _radius;
-public:
-	Circle(glm::vec2 position, double radius) :
-		_radius{ radius }
-	{
-		_position = position;
-	}
-
-	virtual void Draw(sf::RenderWindow& window, sf::Color color = sf::Color::White)
-	{
-		sf::CircleShape circle(_radius);
-		circle.setPointCount(1000);
-		circle.setFillColor(color);
-		circle.setPosition(_position.x - _radius, _position.y - _radius);
-		window.draw(circle);
-	}
-
-	virtual double GetArea()
-	{
-		return glm::pi<double>() * glm::pow(_radius, 2);
-	}
-
-	virtual double GetDiameter()
-	{
-		return glm::pi<double>() * _radius * 2;
-	}
-
-	double GetRadius()
-	{
-		return _radius;
-	}
-};
+#include "Circle.hpp"
 
 int main()
 {
-	Circle circle1(glm::vec2(400, 300), 100);
-	Circle circle2(glm::vec2(600, 300), 100);
-	if (glm::distance(circle1.GetPosition(), circle2.GetPosition()) <= circle1.GetRadius() + circle2.GetRadius())
-	{
-		std::cout << "Circle collision detected!" << std::endl;
-	}
+	Circle circle1(glm::vec2(200, 300), 100);
+	Circle circle2(glm::vec2(400, 300), 50);
 
-	sf::RenderWindow window(sf::VideoMode(1920, 1080), "sfml");
+	sf::RenderWindow window(sf::VideoMode(800, 600), "sfml");
 	sf::Event event;
+
 	while (window.isOpen())
 	{
 		window.clear();
@@ -76,9 +17,20 @@ int main()
 			{
 				window.close();
 			}
+			CircleEvents(circle2, event);
 		}
+
+		if (glm::distance(circle1.GetPosition(), circle2.GetPosition()) <= circle1.GetRadius() + circle2.GetRadius())
+		{
+			circle2.SetColor(sf::Color::Green);
+		}
+		else
+		{
+			circle2.SetColor(sf::Color::White);
+		}
+
 		circle1.Draw(window);
-		circle2.Draw(window, sf::Color::Red);
+		circle2.Draw(window);
 		window.display();
 	}
 	return 0;
